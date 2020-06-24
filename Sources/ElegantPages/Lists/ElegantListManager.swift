@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-class ElegantListManager: ObservableObject {
+public class ElegantListManager: ObservableObject {
 
     @Published var currentPage: (index: Int, state: PageState)
     @Published var activeIndex: Int
@@ -15,7 +15,7 @@ class ElegantListManager: ObservableObject {
     public var datasource: ElegantPagerDataSource!
     public var delegate: ElegantPagerDelegate?
 
-    init(startingPage: Int = 0, pageCount: Int, pageTurnType: PageTurnType) {
+    public init(startingPage: Int = 0, pageCount: Int, pageTurnType: PageTurnType) {
         guard pageCount > 0 else { fatalError("Error: pages must exist") }
 
         currentPage = (startingPage, .completed)
@@ -67,9 +67,10 @@ class ElegantListManager: ObservableObject {
 
 }
 
-protocol ElegantListManagerDirectAccess {
+protocol ElegantListManagerDirectAccess: PageTurnTypeDirectAccess {
 
     var pagerManager: ElegantListManager { get }
+    var pageTurnType: PageTurnType { get }
 
 }
 
@@ -93,10 +94,6 @@ extension ElegantListManagerDirectAccess {
 
     var pageTurnType: PageTurnType {
         pagerManager.pageTurnType
-    }
-
-    var pageTurnAnimation: Animation {
-        pageTurnType.pageTurnAnimation
     }
 
 }

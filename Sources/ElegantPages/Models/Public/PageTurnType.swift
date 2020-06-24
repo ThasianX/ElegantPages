@@ -7,15 +7,6 @@ public enum PageTurnType {
     case regular(pageTurnDelta: CGFloat)
     case earlyCutoff(config: EarlyCutOffConfiguration)
 
-    var pageTurnAnimation: Animation {
-        switch self {
-        case .regular:
-            return .easeInOut
-        case let .earlyCutoff(config):
-            return config.pageTurnAnimation
-        }
-    }
-
 }
 
 public struct EarlyCutOffConfiguration {
@@ -39,5 +30,25 @@ public extension EarlyCutOffConfiguration {
         scrollResistanceCutOff: 40,
         pageTurnCutOff: 80,
         pageTurnAnimation: .spring(response: 0.4, dampingFraction: 0.95))
+
+}
+
+
+protocol PageTurnTypeDirectAccess {
+
+    var pageTurnType: PageTurnType { get }
+
+}
+
+extension PageTurnTypeDirectAccess {
+
+    var pageTurnAnimation: Animation {
+        switch pageTurnType {
+        case .regular:
+            return .easeInOut
+        case let .earlyCutoff(config):
+            return config.pageTurnAnimation
+        }
+    }
 
 }

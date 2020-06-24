@@ -6,7 +6,7 @@ import SwiftUI
 let screen = UIScreen.main.bounds
 let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
 
-public class ElegantPagesManager: ObservableObject {
+public class ElegantPagesManager: ObservableObject, PageTurnTypeDirectAccess {
 
     /**
         The index of current page 0...N-1.
@@ -31,7 +31,7 @@ public class ElegantPagesManager: ObservableObject {
     }
 
     public func scroll(to page: Int) {
-        withAnimation(pageTurnType.pageTurnAnimation) {
+        withAnimation(pageTurnAnimation) {
             currentPage = page
         }
         delegate?.willDisplay(page: page)
@@ -39,9 +39,10 @@ public class ElegantPagesManager: ObservableObject {
 
 }
 
-protocol ElegantSimplePagerManagerDirectAccess {
+protocol ElegantSimplePagerManagerDirectAccess: PageTurnTypeDirectAccess {
 
     var pagerManager: ElegantPagesManager { get }
+    var pageTurnType: PageTurnType { get }
 
 }
 
@@ -53,10 +54,6 @@ extension ElegantSimplePagerManagerDirectAccess {
 
     var pageTurnType: PageTurnType {
         pagerManager.pageTurnType
-    }
-
-    var pageTurnAnimation: Animation {
-        pageTurnType.pageTurnAnimation
     }
 
     var delegate: ElegantPagerDelegate? {

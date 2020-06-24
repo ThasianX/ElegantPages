@@ -16,6 +16,7 @@ public struct ElegantList<List>: View, ElegantListManagerDirectAccess where List
     public var body: some View {
         listView
             .offset(offset)
+            .contentShape(Rectangle())
             .simultaneousGesture(
                 DragGesture()
                     .onChanged { value in

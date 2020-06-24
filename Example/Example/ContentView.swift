@@ -17,6 +17,16 @@ struct ContentView: View {
                 .tabItem({
                     Text("VList")
                 }).tag(1)
+
+            ElegantHPagesExample()
+                .tabItem({
+                    Text("HPages")
+                }).tag(2)
+
+            ElegantVPagesExample()
+                .tabItem({
+                    Text("VPages")
+                }).tag(3)
         }
     }
 

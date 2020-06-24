@@ -17,6 +17,7 @@ struct ElegantPages<Stack>: View, ElegantPagesManagerDirectAccess where Stack: V
     var body: some View {
         stackView
             .offset(offset)
+            .contentShape(Rectangle())
             .simultaneousGesture(
                 DragGesture()
                     .onChanged { value in

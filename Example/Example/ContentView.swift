@@ -12,9 +12,14 @@ struct ContentView: View {
                 .tabItem({
                     Text("HList")
                 }).tag(0)
+
+            ElegantVListExample()
+                .tabItem({
+                    Text("VList")
+                }).tag(1)
         }
     }
-    
+
 }
 
 struct ContentView_Previews: PreviewProvider {

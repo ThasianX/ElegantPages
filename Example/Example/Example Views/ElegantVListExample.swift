@@ -1,8 +1,8 @@
-// Kevin Li - 11:08 PM - 6/23/20
+// Kevin Li - 11:49 PM - 6/23/20
 
 import SwiftUI
 
-struct ElegantHListExample: View {
+struct ElegantVListExample: View {
 
     let pageCount = 40
     let manager: ElegantListManager
@@ -15,7 +15,7 @@ struct ElegantHListExample: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            ElegantHList(manager: manager)
+            ElegantVList(manager: manager)
 
             ScrollToPageButton(pageCount: pageCount, action: manager.scroll)
                 .padding(.top, 90)
@@ -25,7 +25,7 @@ struct ElegantHListExample: View {
 
 }
 
-extension ElegantHListExample: ElegantPagesDataSource {
+extension ElegantVListExample: ElegantPagesDataSource {
 
     func elegantPages(viewForPage page: Int) -> AnyView {
         VStack {
@@ -40,16 +40,15 @@ extension ElegantHListExample: ElegantPagesDataSource {
 
 }
 
-extension ElegantHListExample: ElegantPagesDelegate {
+extension ElegantVListExample: ElegantPagesDelegate {
 
     func elegantPages(willDisplay page: Int) {
         print("Page \(page) will display")
     }
 
 }
-
-struct ElegantHListExample_Previews: PreviewProvider {
+struct ElegantVListExample_Previews: PreviewProvider {
     static var previews: some View {
-        ElegantHListExample()
+        ElegantVListExample()
     }
 }

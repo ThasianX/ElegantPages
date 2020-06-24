@@ -17,7 +17,7 @@ public struct ElegantVPages<Pages>: View where Pages: View {
     }
 
     public var body: some View {
-        ElegantPages(manager: manager,
+        ElegantPagesView(manager: manager,
                          stackView: VerticalStack(pages: pages),
                          pageCount: pages.count,
                          isHorizontal: false,

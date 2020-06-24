@@ -1,20 +1,21 @@
-// Kevin Li - 8:48 PM - 6/23/20
+// Kevin Li - 6:41 PM - 6/23/20
 
 import SwiftUI
 
-struct ElegantList<List>: View, ElegantListManagerDirectAccess where List: View {
+struct ElegantPagesView<Stack>: View, ElegantPagesManagerDirectAccess where Stack: View {
 
     @State private var translation: CGFloat = .zero
     @State private var isTurningPage = false
 
-    @ObservedObject var manager: ElegantListManager
+    @ObservedObject var manager: ElegantPagesManager
 
-    let listView: List
+    let stackView: Stack
+    let pageCount: Int
     let isHorizontal: Bool
     let bounces: Bool
 
-    public var body: some View {
-        listView
+    var body: some View {
+        stackView
             .offset(offset)
             .contentShape(Rectangle())
             .simultaneousGesture(
@@ -44,7 +45,7 @@ struct ElegantList<List>: View, ElegantListManagerDirectAccess where List: View 
 
 }
 
-private extension ElegantList {
+private extension ElegantPagesView {
 
     var offset: CGSize {
         if isHorizontal {
@@ -59,11 +60,11 @@ private extension ElegantList {
     }
 
     var horizontalOffset: CGFloat {
-        -CGFloat(activeIndex) * screen.width
+        -CGFloat(currentPage) * screen.width
     }
 
     var verticalOffset: CGFloat {
-        -CGFloat(activeIndex) * screen.height
+        -CGFloat(currentPage) * screen.height
     }
 
     var verticalScrollOffset: CGFloat {
@@ -73,8 +74,8 @@ private extension ElegantList {
     var properTranslation: CGFloat {
         guard !bounces else { return translation }
 
-        if (activeIndex == 0 && translation > 0) ||
-            (activeIndex == maxPageIndex && translation < 0) {
+        if (currentPage == 0 && translation > 0) ||
+            (currentPage == pageCount-1 && translation < 0) {
             return 0
         }
         return translation
@@ -82,9 +83,9 @@ private extension ElegantList {
 
 }
 
-private extension ElegantList {
+private extension ElegantPagesView {
 
-    func setTranslationForOffset(_ offset: CGFloat) {
+    private func setTranslationForOffset(_ offset: CGFloat) {
         switch pageTurnType {
         case .regular:
             translation = offset
@@ -93,7 +94,7 @@ private extension ElegantList {
         }
     }
 
-    func turnPageIfNeededForChangingOffset(_ offset: CGFloat) {
+    private func turnPageIfNeededForChangingOffset(_ offset: CGFloat) {
         switch pageTurnType {
         case .regular:
             return
@@ -101,26 +102,26 @@ private extension ElegantList {
             guard !isTurningPage else { return }
 
             if offset > 0 && offset > config.pageTurnCutOff {
-                guard activeIndex != 0 else { return }
+                guard currentPage != 0 else { return }
 
                 scroll(direction: .backward)
             } else if offset < 0 && offset < -config.pageTurnCutOff {
-                guard activeIndex != maxPageIndex else { return }
+                guard currentPage != pageCount-1 else { return }
 
                 scroll(direction: .forward)
             }
         }
     }
 
-    func scroll(direction: ScrollDirection) {
+    private func scroll(direction: ScrollDirection) {
         isTurningPage = true // Prevents user drag from continuing
         translation = .zero
 
-        manager.activeIndex = activeIndex + direction.additiveFactor
-        manager.setCurrentPageToBeRearranged()
+        manager.currentPage = currentPage + direction.additiveFactor
+        delegate?.elegantPages(willDisplay: currentPage)
     }
 
-    func turnPageIfNeededForEndOffset(_ offset: CGFloat) {
+    private func turnPageIfNeededForEndOffset(_ offset: CGFloat) {
         translation = .zero
 
         switch pageTurnType {
@@ -129,9 +130,11 @@ private extension ElegantList {
             let dragDelta = offset / axisLength
 
             if abs(dragDelta) > delta {
-                let properNewIndex = (dragDelta > 0 ? activeIndex-1 : activeIndex+1).clamped(to: 0...maxPageIndex)
-                manager.activeIndex = properNewIndex
-                manager.setCurrentPageToBeRearranged()
+                let properNewIndex = (dragDelta > 0 ? currentPage-1 : currentPage+1).clamped(to: 0...pageCount-1)
+                if properNewIndex != currentPage {
+                    manager.currentPage = properNewIndex
+                    delegate?.elegantPages(willDisplay: currentPage)
+                }
             }
         case .earlyCutoff:
             isTurningPage = false

@@ -17,7 +17,7 @@ public struct ElegantHList: View, ElegantListManagerDirectAccess {
     }
 
     public var body: some View {
-        ElegantList(manager: manager,
+        ElegantListView(manager: manager,
                     listView: listView,
                     isHorizontal: true,
                     bounces: bounces)
@@ -25,7 +25,7 @@ public struct ElegantHList: View, ElegantListManagerDirectAccess {
 
     private var listView: some View {
         HStack(alignment: .center, spacing: 0) {
-            ElegantListView(manager: manager, axis: .horizontal)
+            ElegantListController(manager: manager, axis: .horizontal)
                 .frame(width: pagerWidth)
         }
         .frame(width: screen.width, height: screen.height, alignment: .leading)

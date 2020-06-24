@@ -4,7 +4,7 @@ import SwiftUI
 
 public struct ElegantHList: View, ElegantListManagerDirectAccess {
 
-    let pagerManager: ElegantListManager
+    @ObservedObject var pagerManager: ElegantListManager
     var bounces: Bool = false
 
     private var pagerWidth: CGFloat {

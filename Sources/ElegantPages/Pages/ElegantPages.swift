@@ -5,6 +5,7 @@ import SwiftUI
 struct ElegantPagesView<Stack>: View, ElegantSimplePagerManagerDirectAccess where Stack: View {
 
     @State private var translation: CGFloat = .zero
+    @State private var isTurningPage = false
 
     @ObservedObject var pagerManager: ElegantPagesManager
 
@@ -29,12 +30,13 @@ struct ElegantPagesView<Stack>: View, ElegantSimplePagerManagerDirectAccess wher
 
                         withAnimation(self.pageTurnAnimation) {
                             self.setTranslationForOffset(axisOffset)
-                            self.turnPageIfNeededForChangingOffset(value.translation.width)
+                            self.turnPageIfNeededForChangingOffset(axisOffset)
                         }
                     }
                     .onEnded { value in
+                        let axisOffset = self.isHorizontal ? value.translation.width : value.translation.height
                         withAnimation(self.pageTurnAnimation) {
-                            self.turnPageIfNeededForEndOffset(value.translation.width)
+                            self.turnPageIfNeededForEndOffset(axisOffset)
                         }
                     }
             )
@@ -87,7 +89,7 @@ private extension ElegantPagesView {
         case .regular:
             translation = offset
         case let .earlyCutoff(config):
-            translation = (offset / config.pageTurnCutOff) * config.scrollResistanceCutOff
+            translation = isTurningPage ? .zero : (offset / config.pageTurnCutOff) * config.scrollResistanceCutOff
         }
     }
 
@@ -96,6 +98,8 @@ private extension ElegantPagesView {
         case .regular:
             return
         case let .earlyCutoff(config):
+            guard !isTurningPage else { return }
+
             if offset > 0 && offset > config.pageTurnCutOff {
                 guard currentPage != 0 else { return }
 
@@ -109,7 +113,9 @@ private extension ElegantPagesView {
     }
 
     private func scroll(direction: ScrollDirection) {
+        isTurningPage = true // Prevents user drag from continuing
         translation = .zero
+
         pagerManager.currentPage = currentPage + direction.additiveFactor
         delegate?.willDisplay(page: currentPage)
     }
@@ -130,7 +136,7 @@ private extension ElegantPagesView {
                 }
             }
         case .earlyCutoff:
-            ()
+            isTurningPage = false
         }
     }
 

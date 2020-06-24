@@ -29,12 +29,13 @@ public struct ElegantList<List>: View, ElegantListManagerDirectAccess where List
 
                         withAnimation(self.pageTurnAnimation) {
                             self.setTranslationForOffset(axisOffset)
-                            self.turnPageIfNeededForChangingOffset(value.translation.width)
+                            self.turnPageIfNeededForChangingOffset(axisOffset)
                         }
                     }
                     .onEnded { value in
+                        let axisOffset = self.isHorizontal ? value.translation.width : value.translation.height
                         withAnimation(self.pageTurnAnimation) {
-                            self.turnPageIfNeededForEndOffset(value.translation.width)
+                            self.turnPageIfNeededForEndOffset(axisOffset)
                         }
                     }
             )
@@ -87,7 +88,7 @@ private extension ElegantList {
         case .regular:
             translation = offset
         case let .earlyCutoff(config):
-            translation = isTurningPage ? 0 : (offset / config.pageTurnCutOff) * config.scrollResistanceCutOff
+            translation = isTurningPage ? .zero : (offset / config.pageTurnCutOff) * config.scrollResistanceCutOff
         }
     }
 

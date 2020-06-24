@@ -4,11 +4,9 @@ import SwiftUI
 
 struct ElegantVPagesExample: View {
 
-    let pageCount = 3
-    let manager: ElegantPagesManager
+    let manager = ElegantPagesManager(startingPage: 1, pageTurnType: .earlyCutOffDefault)
 
     init() {
-        manager = ElegantPagesManager(startingPage: 1, pageTurnType: .earlyCutOffDefault)
         manager.delegate = self
     }
 
@@ -20,7 +18,7 @@ struct ElegantVPagesExample: View {
                 CustomListView()
             }
 
-            ScrollToPageButton(pageCount: pageCount, action: manager.scroll)
+            ScrollToPageButton(pageCount: 3, action: manager.scroll)
                 .padding(.top, 90)
                 .padding(.trailing, 30)
         }

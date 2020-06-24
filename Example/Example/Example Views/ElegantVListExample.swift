@@ -2,22 +2,21 @@
 
 import SwiftUI
 
+let vListData = (1...40).map { _ in "Ideally, this should be more dynamic content to make the most use out of this list" }
+
 struct ElegantVListExample: View {
 
-    let pageCount = 40
-    let manager: ElegantListManager
+    let manager = ElegantListManager(pageCount: vListData.count, pageTurnType: .earlyCutOffDefault)
 
     init() {
-        manager = ElegantListManager(pageCount: pageCount, pageTurnType: .earlyCutOffDefault)
         manager.datasource = self
-        manager.delegate = self
     }
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             ElegantVList(manager: manager)
 
-            ScrollToPageButton(pageCount: pageCount, action: manager.scroll)
+            ScrollToPageButton(pageCount: vListData.count, action: manager.scroll)
                 .padding(.top, 90)
                 .padding(.trailing, 30)
         }
@@ -31,7 +30,7 @@ extension ElegantVListExample: ElegantPagesDataSource {
         VStack {
             Text("Page \(page)")
                 .font(.largeTitle)
-            Text("Ideally, this should be more dynamic content to make the most use out of this list")
+            Text(vListData[page])
                 .font(.title)
         }
         .padding()
@@ -47,6 +46,7 @@ extension ElegantVListExample: ElegantPagesDelegate {
     }
 
 }
+
 struct ElegantVListExample_Previews: PreviewProvider {
     static var previews: some View {
         ElegantVListExample()

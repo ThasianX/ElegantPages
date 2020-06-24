@@ -15,6 +15,12 @@ public struct EarlyCutOffConfiguration {
     public let pageTurnCutOff: CGFloat
     public let pageTurnAnimation: Animation
 
+    public init(scrollResistanceCutOff: CGFloat, pageTurnCutOff: CGFloat, pageTurnAnimation: Animation) {
+        self.scrollResistanceCutOff = scrollResistanceCutOff
+        self.pageTurnCutOff = pageTurnCutOff
+        self.pageTurnAnimation = pageTurnAnimation
+    }
+    
 }
 
 public extension PageTurnType {

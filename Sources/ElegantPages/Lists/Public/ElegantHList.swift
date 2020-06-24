@@ -5,10 +5,15 @@ import SwiftUI
 public struct ElegantHList: View, ElegantListManagerDirectAccess {
 
     @ObservedObject public var manager: ElegantListManager
-    public var bounces: Bool = false
+    public let bounces: Bool
 
     private var pagerWidth: CGFloat {
         screen.width * CGFloat(maxPageIndex+1)
+    }
+
+    public init(manager: ElegantListManager, bounces: Bool = false) {
+        self.manager = manager
+        self.bounces = bounces
     }
 
     public var body: some View {

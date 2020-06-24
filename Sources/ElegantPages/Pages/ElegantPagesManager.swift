@@ -23,7 +23,7 @@ public class ElegantPagesManager: ObservableObject, PageTurnTypeDirectAccess {
 
     public let pageTurnType: PageTurnType
 
-    public var delegate: ElegantPagerDelegate?
+    public var delegate: ElegantPagesDelegate?
 
     public init(startingPage: Int = 0, pageTurnType: PageTurnType) {
         currentPage = startingPage
@@ -34,30 +34,30 @@ public class ElegantPagesManager: ObservableObject, PageTurnTypeDirectAccess {
         withAnimation(pageTurnAnimation) {
             currentPage = page
         }
-        delegate?.willDisplay(page: page)
+        delegate?.elegantPages(willDisplay: page)
     }
 
 }
 
-protocol ElegantSimplePagerManagerDirectAccess: PageTurnTypeDirectAccess {
+protocol ElegantPagesManagerDirectAccess: PageTurnTypeDirectAccess {
 
-    var pagerManager: ElegantPagesManager { get }
+    var manager: ElegantPagesManager { get }
     var pageTurnType: PageTurnType { get }
 
 }
 
-extension ElegantSimplePagerManagerDirectAccess {
+extension ElegantPagesManagerDirectAccess {
 
     var currentPage: Int {
-        pagerManager.currentPage
+        manager.currentPage
     }
 
     var pageTurnType: PageTurnType {
-        pagerManager.pageTurnType
+        manager.pageTurnType
     }
 
-    var delegate: ElegantPagerDelegate? {
-        pagerManager.delegate
+    var delegate: ElegantPagesDelegate? {
+        manager.delegate
     }
 
 }

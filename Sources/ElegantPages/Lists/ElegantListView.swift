@@ -11,25 +11,25 @@ struct ElegantListView: UIViewControllerRepresentable, ElegantListManagerDirectA
     // See https://stackoverflow.com/questions/58635048/in-a-uiviewcontrollerrepresentable-how-can-i-pass-an-observedobjects-value-to
     private let bugFix = UpdateUIViewControllerBugFixClass()
 
-    @ObservedObject var pagerManager: ElegantListManager
+    @ObservedObject var manager: ElegantListManager
 
     let axis: Axis
 
     func makeUIViewController(context: Context) -> ElegantPagerController {
-        ElegantPagerController(manager: pagerManager, axis: axis)
+        ElegantPagerController(manager: manager, axis: axis)
     }
 
     func updateUIViewController(_ controller: ElegantPagerController, context: Context) {
         DispatchQueue.main.async {
             self.setProperPage(for: controller)
         }
-        pagerManager.delegate?.willDisplay(page: currentPage.index)
+        delegate?.elegantPages(willDisplay: currentPage.index)
     }
 
     private func setProperPage(for controller: ElegantPagerController) {
         switch currentPage.state {
         case .rearrange:
-            controller.rearrange(manager: pagerManager) {
+            controller.rearrange(manager: manager) {
                 self.setActiveIndex(1, animated: false, complete: true) // resets to center
             }
         case .scroll:
@@ -37,12 +37,12 @@ struct ElegantListView: UIViewControllerRepresentable, ElegantListManagerDirectA
 
             if currentPage.index == 0 || currentPage.index == pageCount-1 {
                 setActiveIndex(pageToTurnTo, animated: true, complete: true)
-                controller.reset(manager: pagerManager)
+                controller.reset(manager: manager)
             } else {
                 // This first call to `setActiveIndex` is responsible for animating the page
                 // turn to whatever page we want to scroll to
                 setActiveIndex(pageToTurnTo, animated: true, complete: false)
-                controller.reset(manager: pagerManager) {
+                controller.reset(manager: manager) {
                     self.setActiveIndex(1, animated: false, complete: true)
                 }
             }
@@ -53,11 +53,11 @@ struct ElegantListView: UIViewControllerRepresentable, ElegantListManagerDirectA
 
     private func setActiveIndex(_ index: Int, animated: Bool, complete: Bool) {
         withAnimation(animated ? pageTurnAnimation : nil) {
-            self.pagerManager.activeIndex = index
+            self.manager.activeIndex = index
         }
 
         if complete {
-            pagerManager.currentPage.state = .completed
+            manager.currentPage.state = .completed
         }
     }
 
@@ -75,7 +75,7 @@ class ElegantPagerController: UIViewController {
         previousPage = manager.currentPage.index
 
         controllers = manager.pageRange.map { page in
-            UIHostingController(rootView: manager.datasource.view(for: page))
+            UIHostingController(rootView: manager.datasource.elegantPages(viewForPage: page))
         }
         super.init(nibName: nil, bundle: nil)
 
@@ -124,10 +124,10 @@ class ElegantPagerController: UIViewController {
     private func rearrangeControllersAndUpdatePage(manager: ElegantListManager) {
         if manager.currentPage.index > previousPage { // scrolled down
             controllers.append(controllers.removeFirst())
-            controllers.last!.rootView = manager.datasource.view(for: manager.currentPage.index+1)
+            controllers.last!.rootView = manager.datasource.elegantPages(viewForPage: manager.currentPage.index+1)
         } else { // scrolled up
             controllers.insert(controllers.removeLast(), at: 0)
-            controllers.first!.rootView = manager.datasource.view(for: manager.currentPage.index-1)
+            controllers.first!.rootView = manager.datasource.elegantPages(viewForPage: manager.currentPage.index-1)
         }
     }
 
@@ -147,7 +147,7 @@ class ElegantPagerController: UIViewController {
         }
 
         zip(controllers, manager.pageRange).forEach { controller, page in
-            controller.rootView = manager.datasource.view(for: page)
+            controller.rootView = manager.datasource.elegantPages(viewForPage: page)
         }
 
         completion?()

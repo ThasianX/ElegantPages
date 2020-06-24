@@ -12,8 +12,8 @@ public class ElegantListManager: ObservableObject {
 
     let maxPageIndex: Int
 
-    public var datasource: ElegantPagerDataSource!
-    public var delegate: ElegantPagerDelegate?
+    public var datasource: ElegantPagesDataSource!
+    public var delegate: ElegantPagesDelegate?
 
     public init(startingPage: Int = 0, pageCount: Int, pageTurnType: PageTurnType) {
         guard pageCount > 0 else { fatalError("Error: pages must exist") }
@@ -69,7 +69,7 @@ public class ElegantListManager: ObservableObject {
 
 protocol ElegantListManagerDirectAccess: PageTurnTypeDirectAccess {
 
-    var pagerManager: ElegantListManager { get }
+    var manager: ElegantListManager { get }
     var pageTurnType: PageTurnType { get }
 
 }
@@ -77,23 +77,31 @@ protocol ElegantListManagerDirectAccess: PageTurnTypeDirectAccess {
 extension ElegantListManagerDirectAccess {
 
     var currentPage: (index: Int, state: PageState) {
-        pagerManager.currentPage
+        manager.currentPage
     }
 
     var pageCount: Int {
-        pagerManager.pageCount
+        manager.pageCount
     }
 
     var activeIndex: Int {
-        pagerManager.activeIndex
+        manager.activeIndex
     }
 
     var maxPageIndex: Int {
-        pagerManager.maxPageIndex
+        manager.maxPageIndex
     }
 
     var pageTurnType: PageTurnType {
-        pagerManager.pageTurnType
+        manager.pageTurnType
+    }
+
+    var datasource: ElegantPagesDataSource {
+        manager.datasource
+    }
+
+    var delegate: ElegantPagesDelegate? {
+        manager.delegate
     }
 
 }

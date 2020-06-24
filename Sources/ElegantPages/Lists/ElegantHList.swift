@@ -4,7 +4,7 @@ import SwiftUI
 
 public struct ElegantHList: View, ElegantListManagerDirectAccess {
 
-    @ObservedObject var pagerManager: ElegantListManager
+    @ObservedObject var manager: ElegantListManager
     var bounces: Bool = false
 
     private var pagerWidth: CGFloat {
@@ -12,7 +12,7 @@ public struct ElegantHList: View, ElegantListManagerDirectAccess {
     }
 
     public var body: some View {
-        ElegantList(pagerManager: pagerManager,
+        ElegantList(manager: manager,
                     listView: listView,
                     isHorizontal: true,
                     bounces: bounces)
@@ -20,7 +20,7 @@ public struct ElegantHList: View, ElegantListManagerDirectAccess {
 
     private var listView: some View {
         HStack(alignment: .center, spacing: 0) {
-            ElegantListView(pagerManager: pagerManager, axis: .horizontal)
+            ElegantListView(manager: manager, axis: .horizontal)
                 .frame(width: pagerWidth)
         }
         .frame(width: screen.width, height: screen.height, alignment: .leading)

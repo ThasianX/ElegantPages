@@ -2,12 +2,12 @@
 
 import SwiftUI
 
-struct ElegantPages<Stack>: View, ElegantSimplePagerManagerDirectAccess where Stack: View {
+struct ElegantPages<Stack>: View, ElegantPagesManagerDirectAccess where Stack: View {
 
     @State private var translation: CGFloat = .zero
     @State private var isTurningPage = false
 
-    @ObservedObject var pagerManager: ElegantPagesManager
+    @ObservedObject var manager: ElegantPagesManager
 
     let stackView: Stack
     let pageCount: Int
@@ -116,8 +116,8 @@ private extension ElegantPages {
         isTurningPage = true // Prevents user drag from continuing
         translation = .zero
 
-        pagerManager.currentPage = currentPage + direction.additiveFactor
-        delegate?.willDisplay(page: currentPage)
+        manager.currentPage = currentPage + direction.additiveFactor
+        delegate?.elegantPages(willDisplay: currentPage)
     }
 
     private func turnPageIfNeededForEndOffset(_ offset: CGFloat) {
@@ -131,8 +131,8 @@ private extension ElegantPages {
             if abs(dragDelta) > delta {
                 let properNewIndex = (dragDelta > 0 ? currentPage-1 : currentPage+1).clamped(to: 0...pageCount-1)
                 if properNewIndex != currentPage {
-                    pagerManager.currentPage = properNewIndex
-                    delegate?.willDisplay(page: currentPage)
+                    manager.currentPage = properNewIndex
+                    delegate?.elegantPages(willDisplay: currentPage)
                 }
             }
         case .earlyCutoff:

@@ -7,7 +7,7 @@ public struct ElegantList<List>: View, ElegantListManagerDirectAccess where List
     @State private var translation: CGFloat = .zero
     @State private var isTurningPage = false
 
-    @ObservedObject var pagerManager: ElegantListManager
+    @ObservedObject var manager: ElegantListManager
 
     let listView: List
     let isHorizontal: Bool
@@ -115,8 +115,8 @@ private extension ElegantList {
         isTurningPage = true // Prevents user drag from continuing
         translation = .zero
 
-        pagerManager.activeIndex = activeIndex + direction.additiveFactor
-        pagerManager.setCurrentPageToBeRearranged()
+        manager.activeIndex = activeIndex + direction.additiveFactor
+        manager.setCurrentPageToBeRearranged()
     }
 
     func turnPageIfNeededForEndOffset(_ offset: CGFloat) {
@@ -129,8 +129,8 @@ private extension ElegantList {
 
             if abs(dragDelta) > delta {
                 let properNewIndex = (dragDelta > 0 ? activeIndex-1 : activeIndex+1).clamped(to: 0...maxPageIndex)
-                pagerManager.activeIndex = properNewIndex
-                pagerManager.setCurrentPageToBeRearranged()
+                manager.activeIndex = properNewIndex
+                manager.setCurrentPageToBeRearranged()
             }
         case .earlyCutoff:
             isTurningPage = false

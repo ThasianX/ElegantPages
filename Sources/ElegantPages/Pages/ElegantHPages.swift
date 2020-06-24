@@ -4,20 +4,20 @@ import SwiftUI
 
 public struct ElegantHPages<Pages>: View where Pages: View {
 
-    let pagerManager: ElegantPagesManager
+    let manager: ElegantPagesManager
     let bounces: Bool
     let pages: PageContainer<Pages>
 
-    public init(pagerManager: ElegantPagesManager,
+    public init(manager: ElegantPagesManager,
                 bounces: Bool = false,
                 @PageViewBuilder builder: () -> PageContainer<Pages>) {
-        self.pagerManager = pagerManager
+        self.manager = manager
         self.bounces = bounces
         self.pages = builder()
     }
 
     public var body: some View {
-        ElegantPages(pagerManager: pagerManager,
+        ElegantPages(manager: manager,
                          stackView: HorizontalStack(pages: pages),
                          pageCount: pages.count,
                          isHorizontal: true,

@@ -2,14 +2,14 @@
 
 import SwiftUI
 
-public protocol ElegantPagerDataSource {
+public protocol ElegantPagesDataSource {
 
-    func view(for page: Int) -> AnyView
+    func elegantPages(viewForPage page: Int) -> AnyView
 
 }
 
-public protocol ElegantPagerDelegate {
+public protocol ElegantPagesDelegate {
 
-    func willDisplay(page: Int)
+    func elegantPages(willDisplay page: Int)
 
 }

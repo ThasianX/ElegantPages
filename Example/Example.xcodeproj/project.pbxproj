@@ -29,6 +29,7 @@
 		1E6DA75624A3246700001565 /* ElegantHPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6DA74724A3246600001565 /* ElegantHPages.swift */; };
 		1E6DA75724A3246700001565 /* ElegantPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6DA74824A3246600001565 /* ElegantPages.swift */; };
 		1E6DA75A24A3256700001565 /* ElegantHListExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6DA75924A3256700001565 /* ElegantHListExample.swift */; };
+		1E6DA75C24A329E600001565 /* View+Erased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6DA75B24A329E600001565 /* View+Erased.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		1E6DA74724A3246600001565 /* ElegantHPages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantHPages.swift; sourceTree = "<group>"; };
 		1E6DA74824A3246600001565 /* ElegantPages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantPages.swift; sourceTree = "<group>"; };
 		1E6DA75924A3256700001565 /* ElegantHListExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElegantHListExample.swift; sourceTree = "<group>"; };
+		1E6DA75B24A329E600001565 /* View+Erased.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Erased.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 		1E6DA74224A3246600001565 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1E6DA75B24A329E600001565 /* View+Erased.swift */,
 				1E6DA74324A3246600001565 /* Comparable+Clamped.swift */,
 			);
 			path = Extensions;
@@ -261,6 +264,7 @@
 			files = (
 				1E6DA72024A3245300001565 /* AppDelegate.swift in Sources */,
 				1E6DA75A24A3256700001565 /* ElegantHListExample.swift in Sources */,
+				1E6DA75C24A329E600001565 /* View+Erased.swift in Sources */,
 				1E6DA72224A3245300001565 /* SceneDelegate.swift in Sources */,
 				1E6DA74D24A3246700001565 /* ElegantListManager.swift in Sources */,
 				1E6DA72424A3245300001565 /* ContentView.swift in Sources */,

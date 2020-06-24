@@ -23,7 +23,6 @@ struct ElegantListView: UIViewControllerRepresentable, ElegantListManagerDirectA
         DispatchQueue.main.async {
             self.setProperPage(for: controller)
         }
-        delegate?.elegantPages(willDisplay: currentPage.index)
     }
 
     private func setProperPage(for controller: ElegantPagerController) {
@@ -106,6 +105,7 @@ class ElegantPagerController: UIViewController {
     func rearrange(manager: ElegantListManager, completion: @escaping () -> Void) {
         defer {
             previousPage = manager.currentPage.index
+            manager.delegate?.elegantPages(willDisplay: manager.currentPage.index)
         }
 
         // rearrange if...
@@ -144,6 +144,7 @@ class ElegantPagerController: UIViewController {
     func reset(manager: ElegantListManager, completion: (() -> Void)? = nil) {
         defer {
             previousPage = manager.currentPage.index
+            manager.delegate?.elegantPages(willDisplay: manager.currentPage.index)
         }
 
         zip(controllers, manager.pageRange).forEach { controller, page in

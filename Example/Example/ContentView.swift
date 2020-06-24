@@ -3,9 +3,18 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @State var tab: Int = 0
+
     var body: some View {
-        Text("Hello, World!")
+        TabView {
+            ElegantHListExample()
+                .tabItem({
+                    Text("HList")
+                }).tag(0)
+        }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

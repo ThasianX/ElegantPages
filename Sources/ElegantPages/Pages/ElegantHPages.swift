@@ -17,7 +17,7 @@ public struct ElegantHPages<Pages>: View where Pages: View {
     }
 
     public var body: some View {
-        ElegantPagesView(pagerManager: pagerManager,
+        ElegantPages(pagerManager: pagerManager,
                          stackView: HorizontalStack(pages: pages),
                          pageCount: pages.count,
                          isHorizontal: true,

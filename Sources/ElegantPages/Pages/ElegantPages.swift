@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-struct ElegantPagesView<Stack>: View, ElegantSimplePagerManagerDirectAccess where Stack: View {
+struct ElegantPages<Stack>: View, ElegantSimplePagerManagerDirectAccess where Stack: View {
 
     @State private var translation: CGFloat = .zero
     @State private var isTurningPage = false
@@ -44,7 +44,7 @@ struct ElegantPagesView<Stack>: View, ElegantSimplePagerManagerDirectAccess wher
 
 }
 
-private extension ElegantPagesView {
+private extension ElegantPages {
 
     var offset: CGSize {
         if isHorizontal {
@@ -82,7 +82,7 @@ private extension ElegantPagesView {
 
 }
 
-private extension ElegantPagesView {
+private extension ElegantPages {
 
     private func setTranslationForOffset(_ offset: CGFloat) {
         switch pageTurnType {
@@ -129,7 +129,7 @@ private extension ElegantPagesView {
             let dragDelta = offset / axisLength
 
             if abs(dragDelta) > delta {
-                let properNewIndex = (dragDelta < 0 ? currentPage-1 : currentPage+1).clamped(to: 0...pageCount-1)
+                let properNewIndex = (dragDelta > 0 ? currentPage-1 : currentPage+1).clamped(to: 0...pageCount-1)
                 if properNewIndex != currentPage {
                     pagerManager.currentPage = properNewIndex
                     delegate?.willDisplay(page: currentPage)

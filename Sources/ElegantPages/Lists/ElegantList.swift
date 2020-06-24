@@ -128,7 +128,7 @@ private extension ElegantList {
             let dragDelta = offset / axisLength
 
             if abs(dragDelta) > delta {
-                let properNewIndex = (dragDelta < 0 ? activeIndex-1 : activeIndex+1).clamped(to: 0...maxPageIndex)
+                let properNewIndex = (dragDelta > 0 ? activeIndex-1 : activeIndex+1).clamped(to: 0...maxPageIndex)
                 pagerManager.activeIndex = properNewIndex
                 pagerManager.setCurrentPageToBeRearranged()
             }

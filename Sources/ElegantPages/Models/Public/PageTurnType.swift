@@ -19,7 +19,7 @@ public struct EarlyCutOffConfiguration {
 
 public extension PageTurnType {
 
-    static let regularDefault = Self.regular(pageTurnDelta: 0.5)
+    static let regularDefault = Self.regular(pageTurnDelta: 0.3)
     static let earlyCutOffDefault = Self.earlyCutoff(config: .default)
 
 }

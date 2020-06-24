@@ -31,7 +31,7 @@ public struct ElegantVPages<Pages>: View where Pages: View {
     }
 
     public var body: some View {
-        ElegantPagesView(pagerManager: pagerManager,
+        ElegantPages(pagerManager: pagerManager,
                          stackView: VerticalStack(pages: pages),
                          pageCount: pages.count,
                          isHorizontal: false,

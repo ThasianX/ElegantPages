@@ -11,9 +11,9 @@ public enum PageTurnType {
 
 public struct EarlyCutOffConfiguration {
 
-    let scrollResistanceCutOff: CGFloat
-    let pageTurnCutOff: CGFloat
-    let pageTurnAnimation: Animation
+    public let scrollResistanceCutOff: CGFloat
+    public let pageTurnCutOff: CGFloat
+    public let pageTurnAnimation: Animation
 
 }
 

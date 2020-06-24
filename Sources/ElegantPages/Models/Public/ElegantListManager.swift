@@ -15,6 +15,10 @@ public class ElegantListManager: ObservableObject {
     public var datasource: ElegantPagesDataSource!
     public var delegate: ElegantPagesDelegate?
 
+    public var currentPageIndex: Int {
+        currentPage.index
+    }
+
     public init(startingPage: Int = 0, pageCount: Int, pageTurnType: PageTurnType) {
         guard pageCount > 0 else { fatalError("Error: pages must exist") }
 

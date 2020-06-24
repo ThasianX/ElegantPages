@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-public struct ElegantList<List>: View, ElegantListManagerDirectAccess where List: View {
+struct ElegantList<List>: View, ElegantListManagerDirectAccess where List: View {
 
     @State private var translation: CGFloat = .zero
     @State private var isTurningPage = false

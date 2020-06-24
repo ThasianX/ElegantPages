@@ -4,9 +4,9 @@ import SwiftUI
 
 public struct ElegantHPages<Pages>: View where Pages: View {
 
-    let manager: ElegantPagesManager
-    let bounces: Bool
-    let pages: PageContainer<Pages>
+    public let manager: ElegantPagesManager
+    public let bounces: Bool
+    public let pages: PageContainer<Pages>
 
     public init(manager: ElegantPagesManager,
                 bounces: Bool = false,

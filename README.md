@@ -10,7 +10,7 @@ ElegantPages is an efficient and customizable full screen page view written in S
 
 <br/>
 
-<img src="demo.gif" width="300"/>
+<img src="https://github.com/ThasianX/ElegantCalendar/blob/master/demo.gif" width="300"/>
 
 - [Introduction](#introduction)
 - [Basic Usage](#basic-usage)

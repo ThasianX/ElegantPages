@@ -5,6 +5,7 @@ import SwiftUI
 struct ElegantPagesView<Stack>: View, ElegantPagesManagerDirectAccess where Stack: View {
 
     @State private var translation: CGFloat = .zero
+    @State private var isDragging = false
     @State private var isTurningPage = false
 
     @ObservedObject var manager: ElegantPagesManager
@@ -13,6 +14,15 @@ struct ElegantPagesView<Stack>: View, ElegantPagesManagerDirectAccess where Stac
     let pageCount: Int
     let isHorizontal: Bool
     let bounces: Bool
+
+    private var minDragDistance: CGFloat {
+        switch pageTurnType {
+        case .regular(let delta):
+            return delta*screen.width / 5
+        case .earlyCutoff(let config):
+            return config.pageTurnCutOff / 5
+        }
+    }
 
     var body: some View {
         stackView
@@ -29,17 +39,27 @@ struct ElegantPagesView<Stack>: View, ElegantPagesManagerDirectAccess where Stac
                             return
                         }
 
+                        if abs(axisOffset) > self.minDragDistance {
+                            self.isDragging = true
+                        }
+
                         withAnimation(self.pageTurnAnimation) {
                             self.setTranslationForOffset(axisOffset)
                             self.turnPageIfNeededForChangingOffset(axisOffset)
                         }
                     }
                     .onEnded { value in
+                        guard self.isDragging else { return }
+
                         let axisOffset = self.isHorizontal ? value.translation.width : value.translation.height
+
+                        self.isDragging = false
+
                         withAnimation(self.pageTurnAnimation) {
                             self.turnPageIfNeededForEndOffset(axisOffset)
                         }
-                    }
+                },
+                including: isDragging ? .gesture : .all
             )
     }
 

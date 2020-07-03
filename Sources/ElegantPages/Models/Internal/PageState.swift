@@ -5,7 +5,7 @@ import Foundation
 enum PageState {
 
     case rearrange
-    case scroll
+    case scroll(animated: Bool)
     case completed
 
 }

@@ -30,8 +30,8 @@ public class ElegantPagesManager: ObservableObject, PageTurnTypeDirectAccess {
         self.pageTurnType = pageTurnType
     }
 
-    public func scroll(to page: Int) {
-        withAnimation(pageTurnAnimation) {
+    public func scroll(to page: Int, animated: Bool = true) {
+        withAnimation(animated ? pageTurnAnimation : nil) {
             currentPage = page
         }
         delegate?.elegantPages(willDisplay: page)

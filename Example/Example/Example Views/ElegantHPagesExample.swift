@@ -18,10 +18,18 @@ struct ElegantHPagesExample: View {
                 CustomListView()
             }
 
-            ScrollToPageButton(pageCount: 3, action: manager.scroll)
+            ScrollToPageButton(pageCount: 3, action: animatedScroll)
                 .padding(.top, 90)
                 .padding(.trailing, 30)
         }
+    }
+
+    private func animatedScroll(to page: Int) {
+        manager.scroll(to: page)
+    }
+
+    private func unanimatedScroll(to page: Int) {
+        manager.scroll(to: page, animated: false)
     }
 
 }

@@ -31,16 +31,16 @@ struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerD
             controller.rearrange(manager: manager) {
                 self.setActiveIndex(1, animated: false, complete: true) // resets to center
             }
-        case .scroll:
+        case let .scroll(animated):
             let pageToTurnTo = currentPage.index > controller.previousPage ? maxPageIndex : 0
 
             if currentPage.index == 0 || currentPage.index == pageCount-1 {
-                setActiveIndex(pageToTurnTo, animated: true, complete: true)
+                setActiveIndex(pageToTurnTo, animated: animated, complete: true)
                 controller.reset(manager: manager)
             } else {
                 // This first call to `setActiveIndex` is responsible for animating the page
                 // turn to whatever page we want to scroll to
-                setActiveIndex(pageToTurnTo, animated: true, complete: false)
+                setActiveIndex(pageToTurnTo, animated: animated, complete: false)
                 controller.reset(manager: manager) {
                     self.setActiveIndex(1, animated: false, complete: true)
                 }

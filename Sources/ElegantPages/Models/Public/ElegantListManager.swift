@@ -36,8 +36,8 @@ public class ElegantListManager: ObservableObject {
         }
     }
 
-    public func scroll(to page: Int) {
-        currentPage = (page, .scroll)
+    public func scroll(to page: Int, animated: Bool = true) {
+        currentPage = (page, .scroll(animated: animated))
     }
 
     // Only ever called for a page view with more than 3 pages

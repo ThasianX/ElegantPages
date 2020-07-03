@@ -16,10 +16,18 @@ struct ElegantVListExample: View {
         ZStack(alignment: .topTrailing) {
             ElegantVList(manager: manager)
 
-            ScrollToPageButton(pageCount: vListData.count, action: manager.scroll)
+            ScrollToPageButton(pageCount: vListData.count, action: animatedScroll)
                 .padding(.top, 90)
                 .padding(.trailing, 30)
         }
+    }
+
+    private func animatedScroll(to page: Int) {
+        manager.scroll(to: page)
+    }
+
+    private func unanimatedScroll(to page: Int) {
+        manager.scroll(to: page, animated: false)
     }
 
 }

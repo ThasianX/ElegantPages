@@ -13,10 +13,11 @@ struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerD
 
     @ObservedObject var manager: ElegantListManager
 
+    let width: CGFloat
     let axis: Axis
 
     func makeUIViewController(context: Context) -> ElegantTriadPagesController {
-        ElegantTriadPagesController(manager: manager, axis: axis)
+        ElegantTriadPagesController(manager: manager, width: width, axis: axis)
     }
 
     func updateUIViewController(_ controller: ElegantTriadPagesController, context: Context) {
@@ -69,7 +70,7 @@ class ElegantTriadPagesController: UIViewController {
 
     let axis: Axis
 
-    init(manager: ElegantListManager, axis: Axis) {
+    init(manager: ElegantListManager, width: CGFloat, axis: Axis) {
         self.axis = axis
         previousPage = manager.currentPage.index
 
@@ -89,7 +90,7 @@ class ElegantTriadPagesController: UIViewController {
             } else {
                 controller.view.frame = CGRect(x: 0,
                                                y: screen.height * CGFloat(i),
-                                               width: screen.width,
+                                               width: width,
                                                height: screen.height)
             }
 

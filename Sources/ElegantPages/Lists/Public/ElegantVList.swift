@@ -5,14 +5,16 @@ import SwiftUI
 public struct ElegantVList: View, ElegantListManagerDirectAccess {
 
     @ObservedObject public var manager: ElegantListManager
+    public let width: CGFloat
     public let bounces: Bool
 
     private var pagerHeight: CGFloat {
         screen.height * CGFloat(maxPageIndex+1)
     }
 
-    public init(manager: ElegantListManager, bounces: Bool = false) {
+    public init(manager: ElegantListManager, width: CGFloat, bounces: Bool = false) {
         self.manager = manager
+        self.width = width
         self.bounces = bounces
     }
 
@@ -25,10 +27,10 @@ public struct ElegantVList: View, ElegantListManagerDirectAccess {
 
     private var listView: some View {
         VStack(alignment: .center, spacing: 0) {
-            ElegantListController(manager: manager, axis: .vertical)
+            ElegantListController(manager: manager, width: width, axis: .vertical)
                 .frame(height: pagerHeight)
         }
-        .frame(width: screen.width, height: screen.height, alignment: .top)
+        .frame(width: width, height: screen.height, alignment: .top)
     }
 
 }

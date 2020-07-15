@@ -10,7 +10,7 @@ ElegantPages is an efficient and customizable full screen page view written in S
 
 <br/>
 
-<img src="https://github.com/ThasianX/ElegantCalendar/blob/master/demo.gif" width="300"/>
+<img src="https://github.com/ThasianX/ElegantCalendar/blob/master/dark_demo.gif" width="300"/>
 
 - [Introduction](#introduction)
 - [Basic Usage](#basic-usage)
@@ -168,11 +168,15 @@ If you are using `Package.swift`, you can also add `ElegantPages` as a dependenc
 
 ```swift
 
-dependencies: [
-    ...
-    .package(url: "https://github.com/ThasianX/ElegantPages", .upToNextMajor(from: "1.0.0"))
-    ...
-]
+let package = Package(
+  name: "TestProject",
+  dependencies: [
+    .package(url: "https://github.com/ThasianX/ElegantPages", from: "1.0.1")
+  ],
+  targets: [
+    .target(name: "TestProject", dependencies: ["ElegantPages"])
+  ]
+)
 
 ```
 

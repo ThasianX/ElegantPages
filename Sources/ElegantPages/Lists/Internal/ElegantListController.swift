@@ -32,12 +32,15 @@ struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerD
                 self.setActiveIndex(1, animated: false, complete: true) // resets to center
             }
         case let .scroll(animated):
-            let pageToTurnTo = currentPage.index > controller.previousPage ? maxPageIndex : 0
+            let isFirstPage = currentPage.index == 0
+            let isLastPage = currentPage.index == pageCount-1
 
-            if currentPage.index == 0 || currentPage.index == pageCount-1 {
+            if isFirstPage || isLastPage {
+                let pageToTurnTo = isFirstPage ? 0 : maxPageIndex
                 setActiveIndex(pageToTurnTo, animated: animated, complete: true)
                 controller.reset(manager: manager)
             } else {
+                let pageToTurnTo = currentPage.index > controller.previousPage ? maxPageIndex : 0
                 // This first call to `setActiveIndex` is responsible for animating the page
                 // turn to whatever page we want to scroll to
                 setActiveIndex(pageToTurnTo, animated: animated, complete: false)

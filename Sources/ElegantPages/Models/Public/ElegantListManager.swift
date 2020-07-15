@@ -41,7 +41,7 @@ public class ElegantListManager: ObservableObject {
     }
 
     public func reloadPages() {
-        currentPage = (currentPage.index, .reloadAll)
+        currentPage = (currentPage.index, .scroll(animated: false))
     }
 
     // Only ever called for a page view with more than 3 pages

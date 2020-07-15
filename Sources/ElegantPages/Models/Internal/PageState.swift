@@ -6,7 +6,6 @@ enum PageState {
 
     case rearrange
     case scroll(animated: Bool)
-    case reloadAll
     case completed
 
 }

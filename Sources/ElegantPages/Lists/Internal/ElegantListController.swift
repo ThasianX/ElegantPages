@@ -45,10 +45,6 @@ struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerD
                     self.setActiveIndex(1, animated: false, complete: true)
                 }
             }
-        case .reloadAll:
-            controller.reset(manager: manager) {
-                self.setActiveIndex(self.manager.activeIndex, animated: false, complete: true)
-            }
         case .completed:
             ()
         }

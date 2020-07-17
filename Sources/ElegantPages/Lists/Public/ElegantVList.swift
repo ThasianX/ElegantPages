@@ -18,10 +18,10 @@ public struct ElegantVList: View, ElegantListManagerDirectAccess {
 
     public var body: some View {
         GeometryReader { geometry in
-            ElegantListView(manager: manager,
-                            listView: listView(geometry: geometry),
+            ElegantListView(manager: self.manager,
+                            listView: self.listView(geometry: geometry),
                             isHorizontal: false,
-                            bounces: bounces)
+                            bounces: self.bounces)
         }
     }
 

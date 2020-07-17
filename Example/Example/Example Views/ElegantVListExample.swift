@@ -4,7 +4,7 @@ import SwiftUI
 
 struct ElegantVListExample: View {
 
-    let manager = ElegantListManager(pageCount: listData.count, pageTurnType: .earlyCutOffDefault)
+    let manager = ElegantListManager(pageCount: listData.count)
 
     init() {
         manager.delegate = self
@@ -12,14 +12,18 @@ struct ElegantVListExample: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            ElegantVList(manager: manager) { page in
-                ExampleView(page: page).erased
-            }
+            ElegantVList(manager: manager,
+                         pageTurnType: .earlyCutOffDefault,
+                         viewForPage: exampleView)
 
             ScrollToPageButton(pageCount: listData.count, action: animatedScroll)
                 .padding(.top, 90)
                 .padding(.trailing, 30)
         }
+    }
+
+    private func exampleView(for page: Int) -> AnyView {
+        ExampleView(page: page).erased
     }
 
     private func animatedScroll(to page: Int) {

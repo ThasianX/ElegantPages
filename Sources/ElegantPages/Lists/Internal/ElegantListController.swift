@@ -4,7 +4,7 @@ import SwiftUI
 
 private class UpdateUIViewControllerBugFixClass { }
 
-struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerDirectAccess {
+struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerDirectAccess, PageTurnTypeDirectAccess {
 
     typealias UIViewControllerType = ElegantTriadPagesController
 
@@ -15,6 +15,7 @@ struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerD
 
     let axis: Axis
     let length: CGFloat
+    let pageTurnType: PageTurnType
     let viewForPage: (Int) -> AnyView
 
     func makeUIViewController(context: Context) -> ElegantTriadPagesController {

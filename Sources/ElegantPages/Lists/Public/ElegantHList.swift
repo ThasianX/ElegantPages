@@ -5,6 +5,7 @@ import SwiftUI
 public struct ElegantHList: View, ElegantListManagerDirectAccess {
 
     @ObservedObject public var manager: ElegantListManager
+    public let pageTurnType: PageTurnType
     public let bounces: Bool
     public let viewForPage: (Int) -> AnyView
 
@@ -13,9 +14,11 @@ public struct ElegantHList: View, ElegantListManagerDirectAccess {
     }
 
     public init(manager: ElegantListManager,
+                pageTurnType: PageTurnType,
                 bounces: Bool = false,
                 viewForPage: @escaping (Int) -> AnyView) {
         self.manager = manager
+        self.pageTurnType = pageTurnType
         self.bounces = bounces
         self.viewForPage = viewForPage
     }
@@ -25,6 +28,7 @@ public struct ElegantHList: View, ElegantListManagerDirectAccess {
             ElegantListView(manager: self.manager,
                             listView: self.listView(geometry: geometry),
                             isHorizontal: true,
+                            pageTurnType: self.pageTurnType,
                             bounces: self.bounces)
         }
     }
@@ -34,6 +38,7 @@ public struct ElegantHList: View, ElegantListManagerDirectAccess {
             ElegantListController(manager: manager,
                                   axis: .horizontal,
                                   length: geometry.size.height,
+                                  pageTurnType: pageTurnType,
                                   viewForPage: viewForPage)
                 .frame(width: pagerWidth)
         }

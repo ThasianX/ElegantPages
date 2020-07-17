@@ -8,7 +8,6 @@ public class ElegantListManager: ObservableObject {
     @Published var activeIndex: Int
 
     public let pageCount: Int
-    public let pageTurnType: PageTurnType
 
     let maxPageIndex: Int
 
@@ -18,12 +17,11 @@ public class ElegantListManager: ObservableObject {
         currentPage.index
     }
 
-    public init(startingPage: Int = 0, pageCount: Int, pageTurnType: PageTurnType) {
+    public init(startingPage: Int = 0, pageCount: Int) {
         guard pageCount > 0 else { fatalError("Error: pages must exist") }
 
         currentPage = (startingPage, .completed)
         self.pageCount = pageCount
-        self.pageTurnType = pageTurnType
         maxPageIndex = (pageCount-1).clamped(to: 0...2)
 
         if startingPage == 0 {
@@ -74,10 +72,9 @@ public class ElegantListManager: ObservableObject {
 
 }
 
-protocol ElegantListManagerDirectAccess: PageTurnTypeDirectAccess {
+protocol ElegantListManagerDirectAccess {
 
     var manager: ElegantListManager { get }
-    var pageTurnType: PageTurnType { get }
 
 }
 
@@ -97,10 +94,6 @@ extension ElegantListManagerDirectAccess {
 
     var maxPageIndex: Int {
         manager.maxPageIndex
-    }
-
-    var pageTurnType: PageTurnType {
-        manager.pageTurnType
     }
 
     var delegate: ElegantPagesDelegate? {

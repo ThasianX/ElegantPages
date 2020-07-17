@@ -138,7 +138,6 @@ private extension ElegantPagesView {
         translation = .zero
 
         manager.currentPage = currentPage + direction.additiveFactor
-        delegate?.elegantPages(willDisplay: currentPage)
     }
 
     private func turnPageIfNeededForEndOffset(_ offset: CGFloat) {
@@ -153,7 +152,6 @@ private extension ElegantPagesView {
                 let properNewIndex = (dragDelta > 0 ? currentPage-1 : currentPage+1).clamped(to: 0...pageCount-1)
                 if properNewIndex != currentPage {
                     manager.currentPage = properNewIndex
-                    delegate?.elegantPages(willDisplay: currentPage)
                 }
             }
         case .earlyCutoff:

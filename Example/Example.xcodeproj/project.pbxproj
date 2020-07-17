@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0315AF24C17CDF003C632D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0315AE24C17CDF003C632D /* Constants.swift */; };
 		1E15AC5E24AD8D1D00623E98 /* ElegantListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC4624AD8D1D00623E98 /* ElegantListView.swift */; };
 		1E15AC5F24AD8D1D00623E98 /* ElegantListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC4724AD8D1D00623E98 /* ElegantListController.swift */; };
 		1E15AC6024AD8D1D00623E98 /* ElegantHList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC4924AD8D1D00623E98 /* ElegantHList.swift */; };
@@ -15,7 +16,6 @@
 		1E15AC6324AD8D1D00623E98 /* ScrollDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC4E24AD8D1D00623E98 /* ScrollDirection.swift */; };
 		1E15AC6424AD8D1D00623E98 /* PageViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC5024AD8D1D00623E98 /* PageViewBuilder.swift */; };
 		1E15AC6524AD8D1D00623E98 /* ElegantPagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC5124AD8D1D00623E98 /* ElegantPagesManager.swift */; };
-		1E15AC6624AD8D1D00623E98 /* ElegantPagesDataSource&Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC5224AD8D1D00623E98 /* ElegantPagesDataSource&Delegate.swift */; };
 		1E15AC6724AD8D1D00623E98 /* PageTurnType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC5324AD8D1D00623E98 /* PageTurnType.swift */; };
 		1E15AC6824AD8D1D00623E98 /* ElegantListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC5424AD8D1D00623E98 /* ElegantListManager.swift */; };
 		1E15AC6924AD8D1D00623E98 /* View+Erased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15AC5624AD8D1D00623E98 /* View+Erased.swift */; };
@@ -38,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E0315AE24C17CDF003C632D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1E15AC4624AD8D1D00623E98 /* ElegantListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantListView.swift; sourceTree = "<group>"; };
 		1E15AC4724AD8D1D00623E98 /* ElegantListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantListController.swift; sourceTree = "<group>"; };
 		1E15AC4924AD8D1D00623E98 /* ElegantHList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantHList.swift; sourceTree = "<group>"; };
@@ -46,7 +47,6 @@
 		1E15AC4E24AD8D1D00623E98 /* ScrollDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollDirection.swift; sourceTree = "<group>"; };
 		1E15AC5024AD8D1D00623E98 /* PageViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewBuilder.swift; sourceTree = "<group>"; };
 		1E15AC5124AD8D1D00623E98 /* ElegantPagesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantPagesManager.swift; sourceTree = "<group>"; };
-		1E15AC5224AD8D1D00623E98 /* ElegantPagesDataSource&Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ElegantPagesDataSource&Delegate.swift"; sourceTree = "<group>"; };
 		1E15AC5324AD8D1D00623E98 /* PageTurnType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTurnType.swift; sourceTree = "<group>"; };
 		1E15AC5424AD8D1D00623E98 /* ElegantListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantListManager.swift; sourceTree = "<group>"; };
 		1E15AC5624AD8D1D00623E98 /* View+Erased.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Erased.swift"; sourceTree = "<group>"; };
@@ -105,8 +105,8 @@
 		1E15AC4524AD8D1D00623E98 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				1E15AC4624AD8D1D00623E98 /* ElegantListView.swift */,
 				1E15AC4724AD8D1D00623E98 /* ElegantListController.swift */,
+				1E15AC4624AD8D1D00623E98 /* ElegantListView.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -132,6 +132,7 @@
 		1E15AC4C24AD8D1D00623E98 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				1E0315AE24C17CDF003C632D /* Constants.swift */,
 				1E15AC4D24AD8D1D00623E98 /* PageState.swift */,
 				1E15AC4E24AD8D1D00623E98 /* ScrollDirection.swift */,
 			);
@@ -141,11 +142,10 @@
 		1E15AC4F24AD8D1D00623E98 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				1E15AC5024AD8D1D00623E98 /* PageViewBuilder.swift */,
-				1E15AC5124AD8D1D00623E98 /* ElegantPagesManager.swift */,
-				1E15AC5224AD8D1D00623E98 /* ElegantPagesDataSource&Delegate.swift */,
-				1E15AC5324AD8D1D00623E98 /* PageTurnType.swift */,
 				1E15AC5424AD8D1D00623E98 /* ElegantListManager.swift */,
+				1E15AC5124AD8D1D00623E98 /* ElegantPagesManager.swift */,
+				1E15AC5324AD8D1D00623E98 /* PageTurnType.swift */,
+				1E15AC5024AD8D1D00623E98 /* PageViewBuilder.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -153,8 +153,8 @@
 		1E15AC5524AD8D1D00623E98 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				1E15AC5624AD8D1D00623E98 /* View+Erased.swift */,
 				1E15AC5724AD8D1D00623E98 /* Comparable+Clamped.swift */,
+				1E15AC5624AD8D1D00623E98 /* View+Erased.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -179,8 +179,8 @@
 		1E15AC5B24AD8D1D00623E98 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				1E15AC5C24AD8D1D00623E98 /* ElegantVPages.swift */,
 				1E15AC5D24AD8D1D00623E98 /* ElegantHPages.swift */,
+				1E15AC5C24AD8D1D00623E98 /* ElegantVPages.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -316,6 +316,7 @@
 				1E15AC6C24AD8D1D00623E98 /* ElegantVPages.swift in Sources */,
 				1E6DA75A24A3256700001565 /* ElegantHListExample.swift in Sources */,
 				1E6DA72224A3245300001565 /* SceneDelegate.swift in Sources */,
+				1E0315AF24C17CDF003C632D /* Constants.swift in Sources */,
 				1E6DA75E24A32EFD00001565 /* ElegantVListExample.swift in Sources */,
 				1E15AC6924AD8D1D00623E98 /* View+Erased.swift in Sources */,
 				1E15AC6124AD8D1D00623E98 /* ElegantVList.swift in Sources */,
@@ -332,7 +333,6 @@
 				1E15AC6324AD8D1D00623E98 /* ScrollDirection.swift in Sources */,
 				1E15AC6A24AD8D1D00623E98 /* Comparable+Clamped.swift in Sources */,
 				1E15AC6724AD8D1D00623E98 /* PageTurnType.swift in Sources */,
-				1E15AC6624AD8D1D00623E98 /* ElegantPagesDataSource&Delegate.swift in Sources */,
 				1E15AC6424AD8D1D00623E98 /* PageViewBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

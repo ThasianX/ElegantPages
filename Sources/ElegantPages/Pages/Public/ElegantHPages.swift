@@ -39,3 +39,15 @@ private struct HorizontalStack<Pages>: View where Pages: View {
     }
 
 }
+
+extension ElegantHPages {
+
+    public func onPageChanged(_ callback: ((Int) -> Void)?) -> Self {
+        manager.anyCancellable = manager.$currentPage
+            .sink { page in
+                callback?(page)
+            }
+        return self
+    }
+
+}

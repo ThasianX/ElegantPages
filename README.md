@@ -61,44 +61,44 @@ The `ElegantListView` component is available through [`ElegantHList`](https://gi
 
 import ElegantPages
 
-let vListData = (1...40).map { _ in "Ideally, this should be more dynamic content to make the most use out of this list" }
+let listData = (1...40).map { _ in "Ideally, this should be more dynamic content to make the most use out of this list" }
 
 struct ElegantVListExample: View {
 
     let manager = ElegantListManager(pageCount: vListData.count, pageTurnType: .earlyCutOffDefault)
-
-    init() {
-        manager.datasource = self
-    }
-
+    
     var body: some View {
-        ElegantVList(manager: manager)
-            .frame(width: screen.width - 100) // In case you don't want an entirely full screen list
+        ElegantVList(manager: manager,
+                     pageTurnType: .earlyCutOffDefault) { page in 
+            ExampleView(page: page).erased
+        }
     }
 
 }
 
-extension ElegantVListExample: ElegantPagesDataSource {
+struct ExampleView: View {
 
-    func elegantPages(viewForPage page: Int) -> AnyView {
+    let page: Int
+
+    var body: some View {
         VStack {
             Text("Page \(page)")
                 .font(.largeTitle)
-            Text(vListData[page])
+            Text(listData[page])
                 .font(.title)
         }
         .padding()
-        .erased
     }
-
+    
 }
+
 ```
 
 ## How it works
 
 `ElegantPagesView` is pretty simple. It uses a [function builder](https://github.com/apple/swift-evolution/blob/9992cf3c11c2d5e0ea20bee98657d93902d5b174/proposals/XXXX-function-builders.md) to gather the page views and puts them in either a `HStack` or `VStack` depending on the type of `ElegantPages` view chosen. As a result, all views are created immediately. 
 
-`ElegantListView` is quite interesting. For more flexibility, it uses [`ElegantPagesDataSource`](https://github.com/ThasianX/ElegantPages/blob/master/Sources/ElegantPages/Models/Public/ElegantPagesDataSource%26Delegate.swift) to get the view for any given page. When it is first initialized, it calls the delegate at most 3 times, to get the views for the starting pages. These views are used to initialize an array of at most 3 `UIHostingControllers`, whose `rootViews` are set to a specific origin in a `UIViewController`. Here's the catch, at any given moment, there are at most only 3 pages loaded. As the user scrolls to the next page, old pages are removed and new pages are inserted; the views themselves are juggled as their origins are changed per page turn. This keeps overall memory usage down and also makes scrolling blazingly fast. If you're curious, take a [peek](https://github.com/ThasianX/ElegantPages/blob/master/Sources/ElegantPages/Lists/Internal/ElegantListController.swift).
+`ElegantListView` is quite interesting. For more flexibility, it uses a `@ViewBuilder` to get the view for any given page(it's the closure at the end of the `ElegantVList` declaration. When it is first initialized, it calls this closure at most 3 times, to get the views for the starting pages. These views are used to initialize an array of at most 3 `UIHostingControllers`, whose `rootViews` are set to a specific origin in a `UIViewController`. Here's the catch, at any given moment, there are at most only 3 pages loaded. As the user scrolls to the next page, old pages are removed and new pages are inserted; the views themselves are juggled as their origins are changed per page turn. This keeps overall memory usage down and also makes scrolling blazingly fast. If you're curious, take a [peek](https://github.com/ThasianX/ElegantPages/blob/master/Sources/ElegantPages/Lists/Internal/ElegantListController.swift).
 
 ## Customization
 
@@ -139,19 +139,51 @@ An early cutoff page turn turns the page when the user drags a certain distance 
 
 In case `scrollResistanceCutOff` isn't clear, here's an example. Say we have a horizontally draggable view. If you drag 80 pixels to the right, the offset that is visible to you is also 80 pixels. The amount you scroll is equal to the visible offset. However, if you have a scroll resistance of say 40 pixels, after dragging 80 pixels to the right, you only see that the view has moved 40 pixels to the right. That is why it is called resistance.
 
-#### `delegate`: The delegate of any `ElegantPages` component
+###$ `viewForPage`: datasource method called whenever a new page is displayed that asks for the view of the new page. Available only for `ElegantList` components
 
 ```swift 
 
-public protocol ElegantPagesDelegate {
+// Use as a function
+ElegantVList(..., viewForPage: exampleView)
 
-    func elegantPages(willDisplay page: Int)
+func exampleView(for page: Int) -> AnyView { ExampleView(...) }
 
-}
-
+// Use as a closure
+ElegantHList(...) { page in ExampleView(...) }
+    
 ```
 
-You can conform to `ElegantPagesDelegate` if you want to do something when a page is displayed. 
+#### `onPageChanged`: called whenever a new page is shown. Available for all `ElegantPages` components.
+
+```swift 
+
+ElegantVList(...)
+    .onPageChanged(...)
+
+ElegantHList(...)
+    .onPageChanged(...)
+    
+ElegantHPages(...)
+    .onPageChanged(...)
+    
+ElegantVPages(...)
+    .onPageChanged(...)
+    
+```
+
+#### `frame`: used to set a custom height or width for `ElegantList` components
+
+```swift 
+
+// You may want a smaller width for the VList. However, height for the VList will always be the screen height
+ElegantVList(...)
+    .frame(width: ...)
+
+// You may want a smaller height for the HList. However, width for the HList will always be the screen width
+ElegantHList(...)
+    .frame(height: ...)
+    
+```
 
 ## Demos
 
@@ -172,7 +204,7 @@ If you are using `Package.swift`, you can also add `ElegantPages` as a dependenc
 let package = Package(
   name: "TestProject",
   dependencies: [
-    .package(url: "https://github.com/ThasianX/ElegantPages", from: "1.3.0")
+    .package(url: "https://github.com/ThasianX/ElegantPages", from: "1.4.0")
   ],
   targets: [
     .target(name: "TestProject", dependencies: ["ElegantPages"])

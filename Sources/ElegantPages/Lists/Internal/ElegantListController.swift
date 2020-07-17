@@ -4,7 +4,7 @@ import SwiftUI
 
 private class UpdateUIViewControllerBugFixClass { }
 
-struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerDirectAccess {
+struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerDirectAccess, PageTurnTypeDirectAccess {
 
     typealias UIViewControllerType = ElegantTriadPagesController
 
@@ -15,12 +15,18 @@ struct ElegantListController: UIViewControllerRepresentable, ElegantListManagerD
 
     let axis: Axis
     let length: CGFloat
+    let pageTurnType: PageTurnType
+    let viewForPage: (Int) -> AnyView
 
     func makeUIViewController(context: Context) -> ElegantTriadPagesController {
-        ElegantTriadPagesController(manager: manager, axis: axis, length: length)
+        ElegantTriadPagesController(manager: manager,
+                                    axis: axis,
+                                    length: length,
+                                    viewForPage: viewForPage)
     }
 
     func updateUIViewController(_ controller: ElegantTriadPagesController, context: Context) {
+        controller.viewForPage = viewForPage
         DispatchQueue.main.async {
             self.setProperPage(for: controller)
         }
@@ -72,13 +78,18 @@ class ElegantTriadPagesController: UIViewController {
     private(set) var previousPage: Int
 
     let axis: Axis
+    var viewForPage: (Int) -> AnyView
 
-    init(manager: ElegantListManager, axis: Axis, length: CGFloat) {
+    init(manager: ElegantListManager,
+         axis: Axis,
+         length: CGFloat,
+         viewForPage: @escaping (Int) -> AnyView) {
         self.axis = axis
+        self.viewForPage = viewForPage
         previousPage = manager.currentPage.index
 
         controllers = manager.pageRange.map { page in
-            UIHostingController(rootView: manager.datasource.elegantPages(viewForPage: page))
+            UIHostingController(rootView: viewForPage(page))
         }
         super.init(nibName: nil, bundle: nil)
 
@@ -109,7 +120,6 @@ class ElegantTriadPagesController: UIViewController {
     func rearrange(manager: ElegantListManager, completion: @escaping () -> Void) {
         defer {
             previousPage = manager.currentPage.index
-            manager.delegate?.elegantPages(willDisplay: manager.currentPage.index)
         }
 
         // rearrange if...
@@ -118,7 +128,10 @@ class ElegantTriadPagesController: UIViewController {
                 manager.currentPage.index != 0) && // not 1st or 2nd page
             (previousPage != manager.pageCount-1 &&
                 manager.currentPage.index != manager.pageCount-1) // not last page or 2nd to last page
-        else { return }
+        else {
+            manager.currentPage.state = .completed
+            return
+        }
 
         rearrangeControllersAndUpdatePage(manager: manager)
         resetPagePositions()
@@ -128,10 +141,10 @@ class ElegantTriadPagesController: UIViewController {
     private func rearrangeControllersAndUpdatePage(manager: ElegantListManager) {
         if manager.currentPage.index > previousPage { // scrolled down
             controllers.append(controllers.removeFirst())
-            controllers.last!.rootView = manager.datasource.elegantPages(viewForPage: manager.currentPage.index+1)
+            controllers.last!.rootView = viewForPage(manager.currentPage.index+1)
         } else { // scrolled up
             controllers.insert(controllers.removeLast(), at: 0)
-            controllers.first!.rootView = manager.datasource.elegantPages(viewForPage: manager.currentPage.index-1)
+            controllers.first!.rootView = viewForPage(manager.currentPage.index-1)
         }
     }
 
@@ -148,11 +161,10 @@ class ElegantTriadPagesController: UIViewController {
     func reset(manager: ElegantListManager, completion: (() -> Void)? = nil) {
         defer {
             previousPage = manager.currentPage.index
-            manager.delegate?.elegantPages(willDisplay: manager.currentPage.index)
         }
 
         zip(controllers, manager.pageRange).forEach { controller, page in
-            controller.rootView = manager.datasource.elegantPages(viewForPage: page)
+            controller.rootView = viewForPage(page)
         }
 
         completion?()

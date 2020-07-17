@@ -1,10 +1,7 @@
 // Kevin Li - 5:57 PM - 6/23/20
 
-import Foundation
+import Combine
 import SwiftUI
-
-let screen = UIScreen.main.bounds
-let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
 
 public class ElegantPagesManager: ObservableObject, PageTurnTypeDirectAccess {
 
@@ -23,7 +20,7 @@ public class ElegantPagesManager: ObservableObject, PageTurnTypeDirectAccess {
 
     public let pageTurnType: PageTurnType
 
-    public var delegate: ElegantPagesDelegate?
+    var anyCancellable: AnyCancellable?
 
     public init(startingPage: Int = 0, pageTurnType: PageTurnType) {
         currentPage = startingPage
@@ -34,7 +31,6 @@ public class ElegantPagesManager: ObservableObject, PageTurnTypeDirectAccess {
         withAnimation(animated ? pageTurnAnimation : nil) {
             currentPage = page
         }
-        delegate?.elegantPages(willDisplay: page)
     }
 
 }
@@ -54,10 +50,6 @@ extension ElegantPagesManagerDirectAccess {
 
     var pageTurnType: PageTurnType {
         manager.pageTurnType
-    }
-
-    var delegate: ElegantPagesDelegate? {
-        manager.delegate
     }
 
 }

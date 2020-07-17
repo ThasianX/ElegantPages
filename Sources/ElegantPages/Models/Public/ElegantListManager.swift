@@ -1,5 +1,6 @@
 // Kevin Li - 6:35 PM - 6/23/20
 
+import Combine
 import SwiftUI
 
 public class ElegantListManager: ObservableObject {
@@ -8,23 +9,20 @@ public class ElegantListManager: ObservableObject {
     @Published var activeIndex: Int
 
     public let pageCount: Int
-    public let pageTurnType: PageTurnType
 
     let maxPageIndex: Int
-
-    public var datasource: ElegantPagesDataSource!
-    public var delegate: ElegantPagesDelegate?
 
     public var currentPageIndex: Int {
         currentPage.index
     }
 
-    public init(startingPage: Int = 0, pageCount: Int, pageTurnType: PageTurnType) {
+    var anyCancellable: AnyCancellable?
+
+    public init(startingPage: Int = 0, pageCount: Int) {
         guard pageCount > 0 else { fatalError("Error: pages must exist") }
 
         currentPage = (startingPage, .completed)
         self.pageCount = pageCount
-        self.pageTurnType = pageTurnType
         maxPageIndex = (pageCount-1).clamped(to: 0...2)
 
         if startingPage == 0 {
@@ -48,6 +46,7 @@ public class ElegantListManager: ObservableObject {
     func setCurrentPageToBeRearranged() {
         var currentIndex = currentPage.index
 
+        // only ever called when turning from the first or last page
         if activeIndex == 1 {
             if currentIndex == 0 {
                 // just scrolled from first page to second page
@@ -60,12 +59,12 @@ public class ElegantListManager: ObservableObject {
             }
         } else {
             if activeIndex == 0 {
-                guard currentIndex != 0 else { return }
                 // case where you're on the first page and you drag and stay on the first page
+                guard currentIndex != 0 else { return }
                 currentIndex -= 1
             } else if activeIndex == 2 {
+                // case where you're on the last page and you drag and stay on the last page
                 guard currentIndex != pageCount-1 else { return }
-                // case where you're on the first page and you drag and stay on the first page
                 currentIndex += 1
             }
         }
@@ -75,10 +74,9 @@ public class ElegantListManager: ObservableObject {
 
 }
 
-protocol ElegantListManagerDirectAccess: PageTurnTypeDirectAccess {
+protocol ElegantListManagerDirectAccess {
 
     var manager: ElegantListManager { get }
-    var pageTurnType: PageTurnType { get }
 
 }
 
@@ -98,18 +96,6 @@ extension ElegantListManagerDirectAccess {
 
     var maxPageIndex: Int {
         manager.maxPageIndex
-    }
-
-    var pageTurnType: PageTurnType {
-        manager.pageTurnType
-    }
-
-    var datasource: ElegantPagesDataSource {
-        manager.datasource
-    }
-
-    var delegate: ElegantPagesDelegate? {
-        manager.delegate
     }
 
 }

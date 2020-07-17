@@ -52,3 +52,20 @@ struct CustomListView: View {
     }
 
 }
+
+let listData = (1...40).map { _ in "Ideally, this should be more dynamic content to make the most use out of this list" }
+
+struct ExampleView: View {
+
+    let page: Int
+
+    var body: some View {
+        VStack {
+            Text("Page \(page)")
+                .font(.largeTitle)
+            Text(listData[page])
+                .font(.title)
+        }
+        .padding()
+    }
+}

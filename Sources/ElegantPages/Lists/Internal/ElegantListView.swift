@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-struct ElegantListView<List>: View, ElegantListManagerDirectAccess where List: View {
+struct ElegantListView<List>: View, ElegantListManagerDirectAccess, PageTurnTypeDirectAccess where List: View {
 
     @State private var translation: CGFloat = .zero
     @State private var isTurningPage = false
@@ -11,6 +11,7 @@ struct ElegantListView<List>: View, ElegantListManagerDirectAccess where List: V
 
     let listView: List
     let isHorizontal: Bool
+    let pageTurnType: PageTurnType
     let bounces: Bool
 
     public var body: some View {

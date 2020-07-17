@@ -2,24 +2,27 @@
 
 import SwiftUI
 
-let hListData = (1...40).map { _ in "Ideally, this should be more dynamic content to make the most use out of this list" }
-
 struct ElegantHListExample: View {
 
-    let manager = ElegantListManager(pageCount: hListData.count, pageTurnType: .earlyCutOffDefault)
-
-    init() {
-        manager.datasource = self
-    }
+    let manager = ElegantListManager(pageCount: listData.count)
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            ElegantHList(manager: manager)
+            ElegantHList(manager: manager,
+                         pageTurnType: .earlyCutOffDefault,
+                         viewForPage: exampleView)
+                .onPageChanged { page in
+                    print("Page \(page) will display")
+                }
 
-            ScrollToPageButton(pageCount: hListData.count, action: animatedScroll)
+            ScrollToPageButton(pageCount: listData.count, action: animatedScroll)
                 .padding(.top, 90)
                 .padding(.trailing, 30)
         }
+    }
+
+    private func exampleView(for page: Int) -> AnyView {
+        ExampleView(page: page).erased
     }
 
     private func animatedScroll(to page: Int) {
@@ -28,29 +31,6 @@ struct ElegantHListExample: View {
 
     private func unanimatedScroll(to page: Int) {
         manager.scroll(to: page, animated: false)
-    }
-
-}
-
-extension ElegantHListExample: ElegantPagesDataSource {
-
-    func elegantPages(viewForPage page: Int) -> AnyView {
-        VStack {
-            Text("Page \(page)")
-                .font(.largeTitle)
-            Text(hListData[page])
-                .font(.title)
-        }
-        .padding()
-        .erased
-    }
-
-}
-
-extension ElegantHListExample: ElegantPagesDelegate {
-
-    func elegantPages(willDisplay page: Int) {
-        print("Page \(page) will display")
     }
 
 }

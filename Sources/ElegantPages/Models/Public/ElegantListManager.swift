@@ -12,7 +12,6 @@ public class ElegantListManager: ObservableObject {
 
     let maxPageIndex: Int
 
-    public var datasource: ElegantPagesDataSource!
     public var delegate: ElegantPagesDelegate?
 
     public var currentPageIndex: Int {
@@ -102,10 +101,6 @@ extension ElegantListManagerDirectAccess {
 
     var pageTurnType: PageTurnType {
         manager.pageTurnType
-    }
-
-    var datasource: ElegantPagesDataSource {
-        manager.datasource
     }
 
     var delegate: ElegantPagesDelegate? {

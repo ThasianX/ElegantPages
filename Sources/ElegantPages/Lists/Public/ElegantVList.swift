@@ -27,7 +27,7 @@ public struct ElegantVList: View, ElegantListManagerDirectAccess {
 
     private func listView(geometry: GeometryProxy) -> some View {
         VStack(alignment: .center, spacing: 0) {
-            ElegantListController(manager: manager, width: geometry.size.width, axis: .vertical)
+            ElegantListController(manager: manager, axis: .vertical, length: geometry.size.width)
                 .frame(height: pagerHeight)
         }
         .frame(width: geometry.size.width, height: screen.height, alignment: .top)

@@ -5,32 +5,32 @@ import SwiftUI
 public struct ElegantVList: View, ElegantListManagerDirectAccess {
 
     @ObservedObject public var manager: ElegantListManager
-    public let width: CGFloat
     public let bounces: Bool
 
     private var pagerHeight: CGFloat {
         screen.height * CGFloat(maxPageIndex+1)
     }
 
-    public init(manager: ElegantListManager, width: CGFloat, bounces: Bool = false) {
+    public init(manager: ElegantListManager, bounces: Bool = false) {
         self.manager = manager
-        self.width = width
         self.bounces = bounces
     }
 
     public var body: some View {
-        ElegantListView(manager: manager,
-                    listView: listView,
-                    isHorizontal: false,
-                    bounces: bounces)
+        GeometryReader { geometry in
+            ElegantListView(manager: manager,
+                            listView: listView(geometry: geometry),
+                            isHorizontal: false,
+                            bounces: bounces)
+        }
     }
 
-    private var listView: some View {
+    private func listView(geometry: GeometryProxy) -> some View {
         VStack(alignment: .center, spacing: 0) {
-            ElegantListController(manager: manager, width: width, axis: .vertical)
+            ElegantListController(manager: manager, width: geometry.size.width, axis: .vertical)
                 .frame(height: pagerHeight)
         }
-        .frame(width: width, height: screen.height, alignment: .top)
+        .frame(width: geometry.size.width, height: screen.height, alignment: .top)
     }
 
 }

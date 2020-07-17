@@ -73,6 +73,7 @@ struct ElegantVListExample: View {
 
     var body: some View {
         ElegantVList(manager: manager)
+            .frame(width: screen.width - 100) // In case you don't want an entirely full screen list
     }
 
 }
@@ -171,7 +172,7 @@ If you are using `Package.swift`, you can also add `ElegantPages` as a dependenc
 let package = Package(
   name: "TestProject",
   dependencies: [
-    .package(url: "https://github.com/ThasianX/ElegantPages", from: "1.0.1")
+    .package(url: "https://github.com/ThasianX/ElegantPages", from: "1.3.0")
   ],
   targets: [
     .target(name: "TestProject", dependencies: ["ElegantPages"])

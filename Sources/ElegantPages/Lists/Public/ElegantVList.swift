@@ -17,18 +17,20 @@ public struct ElegantVList: View, ElegantListManagerDirectAccess {
     }
 
     public var body: some View {
-        ElegantListView(manager: manager,
-                    listView: listView,
-                    isHorizontal: false,
-                    bounces: bounces)
+        GeometryReader { geometry in
+            ElegantListView(manager: self.manager,
+                            listView: self.listView(geometry: geometry),
+                            isHorizontal: false,
+                            bounces: self.bounces)
+        }
     }
 
-    private var listView: some View {
+    private func listView(geometry: GeometryProxy) -> some View {
         VStack(alignment: .center, spacing: 0) {
-            ElegantListController(manager: manager, axis: .vertical)
+            ElegantListController(manager: manager, axis: .vertical, length: geometry.size.width)
                 .frame(height: pagerHeight)
         }
-        .frame(width: screen.width, height: screen.height, alignment: .top)
+        .frame(width: geometry.size.width, height: screen.height, alignment: .top)
     }
 
 }

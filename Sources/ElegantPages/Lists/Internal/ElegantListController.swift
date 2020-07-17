@@ -120,7 +120,6 @@ class ElegantTriadPagesController: UIViewController {
     func rearrange(manager: ElegantListManager, completion: @escaping () -> Void) {
         defer {
             previousPage = manager.currentPage.index
-            manager.delegate?.elegantPages(willDisplay: manager.currentPage.index)
         }
 
         // rearrange if...
@@ -129,7 +128,10 @@ class ElegantTriadPagesController: UIViewController {
                 manager.currentPage.index != 0) && // not 1st or 2nd page
             (previousPage != manager.pageCount-1 &&
                 manager.currentPage.index != manager.pageCount-1) // not last page or 2nd to last page
-        else { return }
+        else {
+            manager.currentPage.state = .completed
+            return
+        }
 
         rearrangeControllersAndUpdatePage(manager: manager)
         resetPagePositions()
@@ -159,7 +161,6 @@ class ElegantTriadPagesController: UIViewController {
     func reset(manager: ElegantListManager, completion: (() -> Void)? = nil) {
         defer {
             previousPage = manager.currentPage.index
-            manager.delegate?.elegantPages(willDisplay: manager.currentPage.index)
         }
 
         zip(controllers, manager.pageRange).forEach { controller, page in

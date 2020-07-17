@@ -46,3 +46,17 @@ public struct ElegantVList: View, ElegantListManagerDirectAccess {
     }
 
 }
+
+extension ElegantVList {
+
+    public func onPageChanged(_ callback: ((Int) -> Void)?) -> Self {
+        manager.anyCancellable = manager.$currentPage
+            .filter { $0.state == .completed }
+            .map { $0.index }
+            .sink { page in
+                callback?(page)
+            }
+        return self
+    }
+
+}

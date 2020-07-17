@@ -6,15 +6,14 @@ struct ElegantHListExample: View {
 
     let manager = ElegantListManager(pageCount: listData.count)
 
-    init() {
-        manager.delegate = self
-    }
-
     var body: some View {
         ZStack(alignment: .topTrailing) {
             ElegantHList(manager: manager,
                          pageTurnType: .earlyCutOffDefault,
                          viewForPage: exampleView)
+                .onPageChanged { page in
+                    print("Page \(page) will display")
+                }
 
             ScrollToPageButton(pageCount: listData.count, action: animatedScroll)
                 .padding(.top, 90)
@@ -32,14 +31,6 @@ struct ElegantHListExample: View {
 
     private func unanimatedScroll(to page: Int) {
         manager.scroll(to: page, animated: false)
-    }
-
-}
-
-extension ElegantHListExample: ElegantPagesDelegate {
-
-    func elegantPages(willDisplay page: Int) {
-        print("Page \(page) will display")
     }
 
 }

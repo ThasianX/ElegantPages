@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum PageState {
+enum PageState: Equatable {
 
     case rearrange
     case scroll(animated: Bool)

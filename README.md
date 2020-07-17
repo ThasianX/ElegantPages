@@ -171,6 +171,20 @@ ElegantVPages(...)
     
 ```
 
+#### `frame`: used to set a custom height or width for `ElegantList` components
+
+```swift 
+
+// You may want a smaller width for the VList. However, height for the VList will always be the screen height
+ElegantVList(...)
+    .frame(width: ...)
+
+// You may want a smaller height for the HList. However, width for the HList will always be the screen width
+ElegantHList(...)
+    .frame(height: ...)
+    
+```
+
 ## Demos
 
 The demo shown in the GIF can be checked out on [ElegantCalendar](https://github.com/ThasianX/ElegantCalendar).

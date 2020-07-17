@@ -73,6 +73,7 @@ struct ElegantVListExample: View {
 
     var body: some View {
         ElegantVList(manager: manager)
+            .frame(width: screen.width - 100) // In case you don't want an entirely full screen list
     }
 
 }

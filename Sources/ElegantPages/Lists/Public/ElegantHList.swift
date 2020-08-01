@@ -51,6 +51,7 @@ extension ElegantHList {
 
     public func onPageChanged(_ callback: ((Int) -> Void)?) -> Self {
         manager.anyCancellable = manager.$currentPage
+            .dropFirst()
             .filter { $0.state == .completed }
             .map { $0.index }
             .sink { page in

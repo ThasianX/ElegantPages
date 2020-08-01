@@ -44,6 +44,7 @@ extension ElegantVPages {
 
     public func onPageChanged(_ callback: ((Int) -> Void)?) -> Self {
         manager.anyCancellable = manager.$currentPage
+            .dropFirst()
             .sink { page in
                 callback?(page)
             }
